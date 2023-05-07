@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { FeadbackSection, MainTitle, ButtonContainer, Button, SecondTitle, StatisticList, StatisticItem, Num } from './Feedback.styled'
+import { FeadbackSection, MainTitle, SecondTitle, StatisticList, StatisticItem, Num } from './Feedback.styled'
+import FeedbackOptions from './FeedbackOptions/FeedbackOptions'
 
 
 class Feedback extends Component {
@@ -24,14 +25,11 @@ class Feedback extends Component {
     render() {
         const countTotal = this.countTotalFeedback();
         const positiveFeedback = this.countPositiveFeedbackPercentage();
+
         const Feedback =
             <FeadbackSection>
                 <MainTitle>Please leave feedback</MainTitle>
-                <ButtonContainer>
-                    <Button type='button' onClick={this.hendleStat} name='good'>Good</Button>
-                    <Button type='button' onClick={this.hendleStat} name='neutral'>Neutral</Button>
-                    <Button type='button' onClick={this.hendleStat} name='bad'>Bad</Button>
-                </ButtonContainer>
+                <FeedbackOptions options={['Good', 'Neutral', 'Bad']} onLeaveFeedback={this.hendleStat} />
                 <SecondTitle>Statistics</SecondTitle>
                 <StatisticList>
                     <StatisticItem>Good: <Num>{this.state.good}</Num></StatisticItem>
