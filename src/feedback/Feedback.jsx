@@ -1,47 +1,48 @@
 import React, { Component } from 'react';
-import { FeadbackSection, MainTitle, SecondTitle, StatisticList, StatisticItem, Num } from './Feedback.styled'
+import { FeadbackSection } from './Feedback.styled'
 import FeedbackOptions from './FeedbackOptions/FeedbackOptions'
-
+import Statistic from './Statistic/Statistic';
+import Section from './Section/Section';
+import Notification from './Notification/Notification';
 
 class Feedback extends Component {
-
     state = {
         good: 0,
         neutral: 0,
         bad: 0,
     }
 
-
     hendleStat = ({ currentTarget: { name } }) => {
         this.setState(PS => { return { [name]: PS[name] + 1 } });
     };
 
-    countTotalFeedback = () => {
-        return Object.values(this.state).reduce((acc, val) => acc + val, 0)
-    };
+    countTotalFeedback = () => Object.values(this.state).reduce((acc, val) => acc + val, 0)
+        ;
 
-    countPositiveFeedbackPercentage = () => { return Math.floor((this.state.good / this.countTotalFeedback()) * 100) };
+    countPositiveFeedbackPercentage = () => Math.floor((this.state.good / this.countTotalFeedback()) * 100);
 
     render() {
         const countTotal = this.countTotalFeedback();
         const positiveFeedback = this.countPositiveFeedbackPercentage();
+        const onLeaveFeedback = this.hendleStat;
+        const { good, neutral, bad } = this.state;
 
         const Feedback =
             <FeadbackSection>
-                <MainTitle>Please leave feedback</MainTitle>
-                <FeedbackOptions options={['Good', 'Neutral', 'Bad']} onLeaveFeedback={this.hendleStat} />
-                <SecondTitle>Statistics</SecondTitle>
-                <StatisticList>
-                    <StatisticItem>Good: <Num>{this.state.good}</Num></StatisticItem>
-                    <StatisticItem>Neutral: <Num>{this.state.neutral}</Num></StatisticItem>
-                    <StatisticItem>Bad: <Num>{this.state.bad}</Num></StatisticItem>
-                    <StatisticItem>Total: <Num>{countTotal}</Num></StatisticItem>
-                    <StatisticItem>Positeve feedback: <Num>{positiveFeedback ? positiveFeedback : 0}%</Num></StatisticItem>
-                </StatisticList>
+                <Section title="Please leave feedback" />
+                <FeedbackOptions options={['Good', 'Neutral', 'Bad']} onLeaveFeedback={onLeaveFeedback} />
+                <Section />
+                < Section title="Statistics" />
+                {countTotal ?
+                    (<>
+                        <Statistic good={good} neutral={neutral} bad={bad} total={countTotal} positivePercentage={positiveFeedback} />
+                    </>) :
+                    (<Notification message="There is no feedback" />)
+                }
+                <Section />
             </FeadbackSection>
         return Feedback;
-    }
-
-}
+    };
+};
 
 export default Feedback;
