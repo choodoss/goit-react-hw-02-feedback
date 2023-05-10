@@ -30,7 +30,7 @@ class Feedback extends Component {
         const Feedback =
             <FeadbackSection>
                 <Section title="Please leave feedback" />
-                <FeedbackOptions options={['Good', 'Neutral', 'Bad']} onLeaveFeedback={onLeaveFeedback} />
+                <FeedbackOptions options={this.state} onLeaveFeedback={onLeaveFeedback} />
                 <Section />
                 < Section title="Statistics" />
                 {countTotal ?

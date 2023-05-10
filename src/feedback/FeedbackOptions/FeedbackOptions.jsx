@@ -4,10 +4,8 @@ import PropTypes from 'prop-types';
 export default function FeedbackOptions({ onLeaveFeedback, options }) {
     const FeedbackOptions =
         <ButtonContainer>
-            <Button type='button' onClick={onLeaveFeedback} name={options[0].toLowerCase()}>{options[0]}</Button>
-            <Button type='button' onClick={onLeaveFeedback} name={options[1].toLowerCase()}>{options[1]}</Button>
-            <Button type='button' onClick={onLeaveFeedback} name={options[2].toLowerCase()}>{options[2]}</Button>
-        </ButtonContainer>;
+            {Object.keys(options).map((item, i) => <Button key={i + 1} type='button' onClick={onLeaveFeedback} name={item}>{item.charAt(0).toUpperCase() + item.slice(1)}</Button>)}
+        </ButtonContainer >;
 
     return FeedbackOptions;
 }
